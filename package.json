@@ -1,0 +1,19 @@
+{
+  "name": "chatroom",
+  "version": "0.1.0",
+  "description": "A dumb chatroom.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "dumb",
+    "express"
+  ],
+  "author": "Myst",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
