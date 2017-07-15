@@ -97,4 +97,21 @@ app.put(path, (req, res) => {
   }
 });
 
+
+app.delete(path, (req, res) => {
+  const validAuthentication = validateUser(req, res);
+
+  if (validAuthentication) {
+    const username = req.body.username;
+
+    userIDs.delete(username);
+    messagesToShow.delete(username);
+
+    res.send({success: true});
+  } else {
+    res.status(400);
+    res.send({success: false, error: "Invalid authentication"});
+  }
+});
+
 app.listen(port);
