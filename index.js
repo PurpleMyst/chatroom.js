@@ -56,7 +56,7 @@ app.get(path, (req, res) => {
     const username = req.body.username;
     const messages = messagesToShow.get(username);
 
-    res.send({success: true, messages});
+    res.send({success: true, users: Array.from(userIDs.keys()), messages});
     messages.splice(0, messages.length); /* clear the messages list */
   } else {
     res.status(400);
