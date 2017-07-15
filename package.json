@@ -1,18 +1,14 @@
 {
   "name": "chatroom",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A dumb chatroom.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "chat",
-    "dumb",
-    "express"
-  ],
-  "author": "Myst",
-  "license": "ISC",
+  "keywords": [],
+  "author": "PurpleMyst",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
