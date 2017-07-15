@@ -1,12 +1,60 @@
 /* jshint node: true, esnext: true */
 "use strict";
 
+/* Express initialization */
 const express = require("express");
 const app = express();
+
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+/* Express constants */
 const port = process.env.PORT || 8080;
 const path = "/";
+
+/* Actual variables for the chatroom */
+const userIDs = new Map();
+
+/* Chatroom functions */
+const randomId = () => {
+  const letters = "0123456789ABCDEF";
+
+  let result = "";
+  for (let i = 0; i < 16; ++i) {
+    result += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return result;
+};
+
+const validateUser = (req, res) => {
+  const username = req.body.username;
+
+  if (username === undefined) {
+    return false;
+  } else if (userIDs.has(username)) {
+    return req.cookies["X-Chat-Id"] === userIDs.get(username);
+  } else {
+    const userID = randomId();
+
+    userIDs.set(username, userID);
+    res.cookie("X-Chat-Id", userID);
+    return true;
+  }
+};
+
+/* Express routing */
+app.put(path, (req, res) => {
+  const validAuthentication = validateUser(req, res);
+
+  if (validAuthentication) {
+    res.send({success: true});
+  } else {
+    res.status(400);
+    res.send({success: false, error: "Invalid authentication"});
+  }
+});
 
 app.listen(port);
