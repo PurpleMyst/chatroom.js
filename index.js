@@ -55,6 +55,7 @@ app.get(path, (req, res) => {
   if (validAuthentication) {
     const username = req.body.username;
     const messages = messagesToShow.get(username);
+    console.info(`Replying to GET from ${username} with ${JSON.stringify(messages)}`);
 
     res.send({success: true, users: Array.from(userIDs.keys()), messages});
     messages.splice(0, messages.length); /* clear the messages list */
@@ -73,6 +74,7 @@ app.post(path, (req, res) => {
       res.status(400);
       res.send({success: false, error: "No message specified."});
     } else {
+      console.info(`Sending message "${message}" from ${req.body.username}`);
       for (let [username, toShow] of messagesToShow.entries()) {
         if (username !== req.body.username) {
           toShow.push([req.body.username, message]);
@@ -90,6 +92,7 @@ app.put(path, (req, res) => {
   const validAuthentication = validateUser(req, res);
 
   if (validAuthentication) {
+    console.info(`Replied to PUT from ${req.body.username}`);
     res.send({success: true});
   } else {
     res.status(400);
@@ -114,4 +117,4 @@ app.delete(path, (req, res) => {
   }
 });
 
-app.listen(port);
+app.listen(port, () => console.info("Started."));
